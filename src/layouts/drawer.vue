@@ -1,43 +1,58 @@
 <template>
-  <v-col cols="2">
+  <v-col cols="3">
     <v-sheet rounded="lg">
-      <v-list color="transparent">
-        <v-list-item
-          v-for="layer in layers"
-          :key="layer"
-          link
-          @click="addlayer(layer)"
+      <v-list>
+        <v-list-group
+          v-for="item in group"
+          :key="item.name"
+          v-model="item.active"
+          no-action
         >
-          <v-list-item-content>
-            <v-list-item-title> {{ layer }} </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.name"></v-list-item-title>
+            </v-list-item-content>
+          </template>
 
-        <v-divider class="my-2"></v-divider>
-
-        <v-list-item link color="grey lighten-4">
-          <v-list-item-content>
-            <v-list-item-title>
-              Refresh
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item
+            v-for="child in item.layers"
+            :key="child.name"
+            link
+            @click="addlayer(child.name)"
+          >
+            <v-list-item-content>
+              <v-list-item-title v-text="child.name"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
       </v-list>
     </v-sheet>
   </v-col>
 </template>
-
 <script>
 export default {
   data: () => ({
-    layers: ["conv2d", "Messages", "Profile", "Updates"],
+    group: [
+      //1
+      {
+        name: "Convolution",
+        layers: [
+          { name: "conv1d" },
+          { name: "conv2d" },
+          { name: "conv2dTranspose" },
+          { name: "conv3d" },
+          { name: "cropping2D" },
+          { name: "depthwiseConv2d" },
+          { name: "separableConv2d" },
+          { name: "upSampling2d" },
+        ],
+      },
+    ],
   }),
   methods: {
-    addlayer(layer) {
-      alert(layer);
+    addlayer(name) {
+      this.$emit("add", name);
     },
   },
 };
 </script>
-
-<style></style>
