@@ -1,25 +1,39 @@
 <template>
   <div>
-    <v-btn @click="getall">汇总测试</v-btn>
-    <v-btn @click="addlayer">conv2d</v-btn>
-    <v-btn @click="run">开始训练</v-btn>
-    <component
-      v-for="(item, index) in layers"
-      :is="item.name"
-      :key="index"
-      @remove="remove(index)"
-      @count="count(index)"
-      v-on:getmsg = "showmsg"
-    ></component>
+    <bar></bar>
+    <v-main class="grey lighten-3">
+      <v-container>
+        <v-row>
+            <drawer></drawer>
+          <v-col cols="6">
+            <v-sheet min-height="100vh" rounded="lg">
+              <v-btn @click="getall">汇总测试</v-btn>
+              <v-btn @click="addlayer">conv2d</v-btn>
+              <v-btn @click="run">开始训练</v-btn>
+              <component
+                v-for="(item, index) in layers"
+                :is="item.name"
+                :key="index"
+                @remove="remove(index)"
+                @count="count(index)"
+                v-on:getmsg="showmsg"
+              ></component>
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
   </div>
 </template>
 
 <script>
+import bar from "../layouts/bar.vue";
+import drawer from "../layouts/drawer.vue";
 import * as tf from "@tensorflow/tfjs";
 import * as tfvis from "@tensorflow/tfjs-vis";
-import { MnistData } from "../components/data.js";
+import { MnistData } from "../assets/data.js";
 
-import conv2d from "../components/conv2d.vue";
+import conv2d from "../assets/conv2d.vue";
 export default {
   data: () => ({
     layers: [],
@@ -37,6 +51,8 @@ export default {
     ],
   }),
   components: {
+    bar,
+    drawer,
     conv2d,
   },
   methods: {
@@ -217,26 +233,25 @@ export default {
       labels.dispose();
     },
     async run() {
-      const data = new MnistData();
-      await data.load();
-      await this.showExamples(data);
-      const model = this.getModel();
-      tfvis.show.modelSummary({ name: "Model Architecture" }, model);
+      tfvis.visor();
+      // const data = new MnistData();
+      // await data.load();
+      // await this.showExamples(data);
+      // const model = this.getModel();
+      // tfvis.show.modelSummary({ name: "Model Architecture" }, model);
 
-      await this.train(model, data);
-      await this.showAccuracy(model, data);
-      await this.showConfusion(model, data);
+      // await this.train(model, data);
+      // await this.showAccuracy(model, data);
+      // await this.showConfusion(model, data);
     },
     getall() {
       console.log(this.layers["1"]);
       console.log(this.layers["1"].name);
     },
-    showmsg(msg){
-            console.log('子组件传过来的值',msg)
-        }
+    showmsg(msg) {
+      console.log("子组件传过来的值", msg);
+    },
   },
-  mounted() {
-
-  },
+  mounted() {},
 };
 </script>
