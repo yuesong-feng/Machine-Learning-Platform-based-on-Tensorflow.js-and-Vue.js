@@ -33,7 +33,6 @@
 export default {
   data: () => ({
     group: [
-      //1
       {
         name: "Convolution",
         layers: [
@@ -45,6 +44,12 @@ export default {
           { name: "depthwiseConv2d" },
           { name: "separableConv2d" },
           { name: "upSampling2d" },
+        ],
+      },
+            {
+        name: "Pooing",
+        layers: [
+          { name: "maxPooling2d" },
         ],
       },
     ],

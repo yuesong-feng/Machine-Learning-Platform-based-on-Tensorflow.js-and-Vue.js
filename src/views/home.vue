@@ -7,12 +7,14 @@
           <drawer v-on:add="addlayer"></drawer>
           <v-col>
             <v-sheet min-height="100vh" rounded="lg">
-              <v-btn @click="getall">汇总测试</v-btn>
-              <v-btn @click="run">开始训练</v-btn>
+              <v-btn @click="test()">汇总测试</v-btn>
+              <v-btn @click="run()">开始训练</v-btn>
               <component
                 v-for="(item, index) in layers"
                 :is="item.name"
                 :key="index"
+                v-bind:index="index"
+                v-bind:totalLayers="gettotalLayers()"
                 @remove="remove(index)"
               ></component>
             </v-sheet>
@@ -31,6 +33,7 @@ import * as tfvis from "@tensorflow/tfjs-vis";
 import { MnistData } from "../assets/data.js";
 
 import conv2d from "../assets/conv2d.vue";
+import maxPooling2d from "../assets/maxPooling2d.vue";
 export default {
   data: () => ({
     layers: [],
@@ -39,6 +42,7 @@ export default {
     bar,
     drawer,
     conv2d,
+    maxPooling2d,
   },
   methods: {
     addlayer(layername) {
@@ -47,15 +51,16 @@ export default {
       });
     },
     remove(index) {
-      console.log(this.layers[index]);
-      // this.layers.splice(index, 1);
+      this.layers.splice(index, 1);
+    },
+    gettotalLayers() {
+      return this.layers.length;
     },
     async run() {
       tfvis.visor();
     },
-    getall() {
-      console.log(this.layers["1"]);
-      console.log(this.layers["1"].name);
+    test() {
+      console.log(this.layers[0]);
     },
   },
   mounted() {},
