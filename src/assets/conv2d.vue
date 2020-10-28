@@ -22,7 +22,7 @@
       <v-row no-gutters>
         <!-- filters -->
         <v-col cols="3">
-          <v-text-field label="filters" dense outlined></v-text-field>
+          <v-text-field v-model="filters" label="filters" dense outlined></v-text-field>
         </v-col>
         <v-col cols="1">
           <v-tooltip bottom max-width="800">
@@ -40,7 +40,7 @@
         </v-col>
         <!-- kernelSize -->
         <v-col cols="3">
-          <v-text-field label="kernelSize" dense outlined></v-text-field>
+          <v-text-field v-model="kernelSize" label="kernelSize" dense outlined></v-text-field>
         </v-col>
         <v-col cols="1">
           <v-tooltip bottom max-width="800">
@@ -59,7 +59,7 @@
         </v-col>
         <!-- strides -->
         <v-col cols="3">
-          <v-text-field label="strides" dense outlined></v-text-field>
+          <v-text-field v-model="strides" label="strides" dense outlined></v-text-field>
         </v-col>
         <v-col cols="1">
           <v-tooltip bottom max-width="800">
@@ -80,7 +80,7 @@
         </v-col>
         <!-- padding -->
         <v-col cols="3">
-          <v-select :items="padding" label="padding" dense outlined></v-select>
+          <v-select v-model="padding" :items="padding_list" label="padding" dense outlined></v-select>
         </v-col>
         <v-col cols="1">
           <v-tooltip bottom max-width="800">
@@ -98,7 +98,8 @@
         <!-- dataFormat -->
         <v-col cols="3">
           <v-select
-              :items="dataFormat"
+              v-model="dataFormat"
+              :items="dataFormat_list"
               label="dataFormat"
               dense
               outlined
@@ -124,7 +125,7 @@
         </v-col>
         <!-- dilationRate  -->
         <v-col cols="3">
-          <v-text-field label="dilationRate " dense outlined></v-text-field>
+          <v-text-field v-model="dilationRate" label="dilationRate " dense outlined></v-text-field>
         </v-col>
         <v-col cols="1">
           <v-tooltip bottom max-width="800">
@@ -147,7 +148,8 @@
         <!-- activation  -->
         <v-col cols="3">
           <v-select
-              :items="activation"
+              v-model="activation"
+              :items="activation_list"
               label="activation "
               dense
               outlined
@@ -218,9 +220,17 @@ export default {
     },
   },
   data: () => ({
-    padding: ["valid", "same", "causal"],
-    dataFormat: ["channelsFirst", "channelsLast"],
-    activation: [
+    allData:{},
+    filters: "",
+    kernelSize:"",
+    strides:"",
+    padding: "",
+    dataFormat:"",
+    dilationRate:"",
+    activation:"",
+    padding_list: ["valid", "same", "causal"],
+    dataFormat_list: ["channelsFirst", "channelsLast"],
+    activation_list: [
       "elu",
       "hardSigmoid",
       "linear",
@@ -234,13 +244,20 @@ export default {
       "tanh",
     ],
   }),
-  watch:{
-
-  },
   methods: {
     remove() {
-      this.$emit("remove", "");
+      this.$emit("remove", "")
     },
+    sendData(){
+      //send data to allData
+      this.allData['filters'] = this.filters
+      this.allData['kernelSize'] = this.kernelSize
+      this.allData['strides'] = this.strides
+      this.allData['padding'] = this.padding
+      this.allData['dataFormat'] = this.dataFormat
+      this.allData['dilationRate'] = this.dilationRate
+      this.allData['activation'] = this.activation
+    }
   },
   mounted() {
   },

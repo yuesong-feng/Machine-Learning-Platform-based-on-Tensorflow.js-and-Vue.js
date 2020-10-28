@@ -102,7 +102,8 @@ export default {
       type: Number,
     },
   },
-  data: () => ({}),
+  data: () => ({
+  }),
   methods: {
     remove() {
       this.$emit("remove", "");

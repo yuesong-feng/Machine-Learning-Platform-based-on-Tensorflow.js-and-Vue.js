@@ -62,7 +62,8 @@ export default {
     },
     test() {
       for(let i=0; i<this.$refs.getParameters.length; i++){
-        console.log(this.$refs.getParameters[i])
+        this.$refs.getParameters[i].sendData()
+        console.log(this.$refs.getParameters[i].allData)
       }
     },
   },
