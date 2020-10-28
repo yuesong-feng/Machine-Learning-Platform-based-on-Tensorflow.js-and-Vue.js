@@ -3,85 +3,26 @@
     <v-tooltip bottom max-width="800">
       <template v-slot:activator="{ on, attrs }">
         <v-card-title>
-          <span v-bind="attrs" v-on="on">maxPooling2d</span>
+          <span v-bind="attrs" v-on="on">flatten</span>
         </v-card-title>
       </template>
       <span
-        >Max pooling operation for spatial data.<br /><br />
+        >Flattens the input. Does not affect the batch size.<br /><br />
 
-        Input shape <br />If dataFormat === CHANNEL_LAST: 4D tensor with shape:
-        [batchSize, rows, cols, channels] <br />If dataFormat === CHANNEL_FIRST:
-        4D tensor with shape: [batchSize, channels, rows, cols]
-        <br /><br />Output shape <br />If dataFormat=CHANNEL_LAST: 4D tensor
-        with shape: [batchSize, pooleRows, pooledCols, channels] <br />If
-        dataFormat=CHANNEL_FIRST: 4D tensor with shape: [batchSize, channels,
-        pooleRows, pooledCols]</span
-      >
+        A Flatten layer flattens each batch in its inputs to 1D (making the
+        output 2D).<br />
+        For example:<br /><br />
+        const input = tf.input({shape: [4, 3]});<br />
+        const flattenLayer = tf.layers.flatten();<br />
+        // Inspect the inferred output shape of the flatten layer, which<br />
+        // equals `[null, 12]`. The 2nd dimension is 4 * 3, i.e., the result of
+        the<br />
+        // flattening. (The 1st dimension is the undermined batch size.)<br />
+        console.log(JSON.stringify(flattenLayer.apply(input).shape));<br />
+      </span>
     </v-tooltip>
     <v-card-actions>
       <v-row no-gutters>
-        <!-- poolSize -->
-        <v-col cols="3">
-          <v-text-field label="poolSize" dense outlined></v-text-field>
-        </v-col>
-        <v-col cols="1">
-          <v-tooltip bottom max-width="800">
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon color="primary" v-bind="attrs" v-on="on"
-                >mdi-chat-alert-outline
-              </v-icon>
-            </template>
-            <span
-              >poolSize (number|[number, number]) <br /><br />Factors by which
-              to downscale in each dimension [vertical, horizontal]. Expects an
-              integer or an array of 2 integers. <br /><br />For example, [2, 2]
-              will halve the input in both spatial dimension. If only one
-              integer is specified, the same window length will be used for both
-              dimensions.</span
-            >
-          </v-tooltip>
-        </v-col>
-        <!-- strides -->
-        <v-col cols="3">
-          <v-text-field label="strides" dense outlined></v-text-field>
-        </v-col>
-        <v-col cols="1">
-          <v-tooltip bottom max-width="800">
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon color="primary" v-bind="attrs" v-on="on"
-                >mdi-chat-alert-outline
-              </v-icon>
-            </template>
-            <span
-              >strides (number|[number, number]) <br /><br />The size of the
-              stride in each dimension of the pooling window. Expects an integer
-              or an array of 2 integers. Integer, tuple of 2 integers, or None.
-              If null, defaults to poolSize.</span
-            >
-          </v-tooltip>
-        </v-col>
-        <!-- padding  -->
-        <v-col cols="3">
-          <v-select
-            v-model="padding"
-            :items="padding_list"
-            label="padding"
-            dense
-            outlined
-          ></v-select>
-        </v-col>
-        <v-col cols="1">
-          <v-tooltip bottom max-width="800">
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon color="primary" v-bind="attrs" v-on="on"
-                >mdi-chat-alert-outline
-              </v-icon>
-            </template>
-            <span
-              >padding ('valid'|'same'|'causal') <br /><br />Padding mode.</span
-            >
-          </v-tooltip>
-        </v-col>
         <!-- dataFormat  -->
         <v-col cols="3">
           <v-select
@@ -330,9 +271,6 @@ export default {
   },
   data: () => ({
     allData: {},
-    poolSize: "",
-    strides: "",
-    padding: "",
     dataFormat: "",
     inputShape: "",
     batchInputShape: "",
@@ -342,7 +280,6 @@ export default {
     trainable: "",
     weights: "",
     inputDType: "",
-    padding_list: ["valid", "same", "causal"],
     dataFormat_list: ["channelsFirst", "channelsLast"],
     dtype_list: ["float32", "int32", "bool", "complex64", "string"],
     trainable_list: ["true", "false"],
@@ -354,9 +291,6 @@ export default {
     },
     sendData() {
       //send data to allData
-      this.allData["poolSize"] = this.poolSize;
-      this.allData["strides"] = this.strides;
-      this.allData["padding"] = this.padding;
       this.allData["dataFormat"] = this.dataFormat;
       this.allData["inputShape"] = this.inputShape;
       this.allData["batchInputShape"] = this.batchInputShape;

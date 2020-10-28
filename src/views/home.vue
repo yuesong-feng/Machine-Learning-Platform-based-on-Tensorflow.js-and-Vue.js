@@ -9,13 +9,14 @@
             <v-sheet min-height="100vh" rounded="lg">
               <v-btn @click="test()">汇总测试</v-btn>
               <v-btn @click="run()">开始训练</v-btn>
-              <component ref="getParameters"
-                         v-for="(item, index) in layers"
-                  :is="item.name"
-                  :key="index"
-                  v-bind:index="index"
-                  v-bind:totalLayers="gettotalLayers()"
-                  @remove="remove(index)"
+              <component
+                ref="getParameters"
+                v-for="(item, index) in layers"
+                :is="item.name"
+                :key="index"
+                v-bind:index="index"
+                v-bind:totalLayers="gettotalLayers()"
+                @remove="remove(index)"
               ></component>
             </v-sheet>
           </v-col>
@@ -30,10 +31,12 @@ import bar from "../layouts/bar.vue";
 import drawer from "../layouts/drawer.vue";
 import * as tf from "@tensorflow/tfjs";
 import * as tfvis from "@tensorflow/tfjs-vis";
-import {MnistData} from "../assets/data.js";
+import { MnistData } from "../assets/data.js";
 
 import conv2d from "../assets/conv2d.vue";
 import maxPooling2d from "../assets/maxPooling2d.vue";
+import flatten from "../assets/flatten";
+import dense from "@/assets/dense";
 
 export default {
   data: () => ({
@@ -44,6 +47,8 @@ export default {
     drawer,
     conv2d,
     maxPooling2d,
+    flatten,
+    dense,
   },
   methods: {
     addlayer(layername) {
@@ -57,17 +62,16 @@ export default {
     gettotalLayers() {
       return this.layers.length;
     },
+    test() {
+      for (let i = 0; i < this.$refs.getParameters.length; i++) {
+        this.$refs.getParameters[i].sendData();
+        console.log(this.$refs.getParameters[i].allData);
+      }
+    },
     async run() {
       tfvis.visor();
     },
-    test() {
-      for(let i=0; i<this.$refs.getParameters.length; i++){
-        this.$refs.getParameters[i].sendData()
-        console.log(this.$refs.getParameters[i].allData)
-      }
-    },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
