@@ -123,28 +123,28 @@ export default {
   data: () => ({
     selectedParameter: "",
     parameters: [
-      'units',
-      'activation',
-      'useBias',
-      'kernelInitializer',
-      'biasInitializer',
-      'inputDim',
-      'kernelConstraint',
-      'biasConstraint',
-      'kernelRegularizer',
-      'biasRegularizer',
-      'activityRegularizer',
-      'inputShape',
-      'batchInputShape',
-      'batchSize',
-      'dtype',
-      'name',
-      'trainable',
-      'weights',
-      'inputDType',
+      "units",
+      "activation",
+      "useBias",
+      "kernelInitializer",
+      "biasInitializer",
+      "inputDim",
+      "kernelConstraint",
+      "biasConstraint",
+      "kernelRegularizer",
+      "biasRegularizer",
+      "activityRegularizer",
+      "inputShape",
+      "batchInputShape",
+      "batchSize",
+      "dtype",
+      "name",
+      "trainable",
+      "weights",
+      "inputDType",
     ],
     allParameters: [],
-    layerData: {},
+    layerData: { layerName: "dense" },
   }),
   methods: {
     addParameter(layerName) {
@@ -159,6 +159,9 @@ export default {
       this.$emit("remove", "");
     },
     sendData() {
+      if (this.$refs.Parameters == null) {
+        return;
+      }
       for (let i = 0; i < this.$refs.Parameters.length; i++) {
         this.$refs.Parameters[i].sendData();
         for (let key in this.$refs.Parameters[i].parameterData) {

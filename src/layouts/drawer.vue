@@ -18,7 +18,7 @@
             v-for="child in item.layers"
             :key="child.name"
             link
-            @click="addlayer(child.name)"
+            @click="addLayer(child.name)"
           >
             <v-list-item-content>
               <v-list-item-title v-text="child.name"></v-list-item-title>
@@ -33,6 +33,10 @@
 export default {
   data: () => ({
     group: [
+      {
+        name: "Dataset",
+        layers: [{ name: "MNIST" }],
+      },
       {
         name: "Basic",
         layers: [
@@ -67,7 +71,7 @@ export default {
     ],
   }),
   methods: {
-    addlayer(name) {
+    addLayer(name) {
       this.$emit("add", name);
     },
   },

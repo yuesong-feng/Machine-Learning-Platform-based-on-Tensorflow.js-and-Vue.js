@@ -113,7 +113,7 @@ export default {
       "weights",
     ],
     allParameters: [],
-    layerData: {},
+    layerData: { layerName: "flatten" },
   }),
   methods: {
     addParameter(layerName) {
@@ -128,6 +128,9 @@ export default {
       this.$emit("remove", "");
     },
     sendData() {
+      if (this.$refs.Parameters == null) {
+        return;
+      }
       for (let i = 0; i < this.$refs.Parameters.length; i++) {
         this.$refs.Parameters[i].sendData();
         for (let key in this.$refs.Parameters[i].parameterData) {

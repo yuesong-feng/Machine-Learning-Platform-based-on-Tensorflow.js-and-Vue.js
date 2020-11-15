@@ -29,6 +29,7 @@
 <script>
 import bar from "../layouts/bar.vue";
 import drawer from "../layouts/drawer.vue";
+import MNIST from "@/assets/MNIST";
 import * as tf from "@tensorflow/tfjs";
 import * as tfvis from "@tensorflow/tfjs-vis";
 import { MnistData } from "../assets/data.js";
@@ -49,6 +50,7 @@ export default {
     maxPooling2d,
     flatten,
     dense,
+    MNIST,
   },
   methods: {
     addLayer(layerName) {
