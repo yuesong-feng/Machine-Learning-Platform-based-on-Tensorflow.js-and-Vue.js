@@ -4,7 +4,7 @@
     <v-main class="grey lighten-3">
       <v-container fluid>
         <v-row>
-          <drawer v-on:add="addlayer"></drawer>
+          <drawer v-on:add="addLayer"></drawer>
           <v-col>
             <v-sheet min-height="100vh" rounded="lg">
               <v-btn @click="test()">汇总测试</v-btn>
@@ -15,7 +15,7 @@
                 :is="item.name"
                 :key="index"
                 v-bind:index="index"
-                v-bind:totalLayers="gettotalLayers()"
+                v-bind:totalLayers="getTotalLayers()"
                 @remove="remove(index)"
               ></component>
             </v-sheet>
@@ -51,21 +51,21 @@ export default {
     dense,
   },
   methods: {
-    addlayer(layername) {
+    addLayer(layerName) {
       this.layers.push({
-        name: layername,
+        name: layerName,
       });
     },
     remove(index) {
       this.layers.splice(index, 1);
     },
-    gettotalLayers() {
+    getTotalLayers() {
       return this.layers.length;
     },
     test() {
       for (let i = 0; i < this.$refs.getParameters.length; i++) {
         this.$refs.getParameters[i].sendData();
-        console.log(this.$refs.getParameters[i].allData);
+        console.log(this.$refs.getParameters[i].layerData);
       }
     },
     async run() {
