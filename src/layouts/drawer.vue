@@ -68,6 +68,10 @@ export default {
         name: "Pooing",
         layers: [{ name: "maxPooling2d" }],
       },
+      {
+        name: "LayersModel",
+        layers: [{ name: "compile" }],
+      },
     ],
   }),
   methods: {

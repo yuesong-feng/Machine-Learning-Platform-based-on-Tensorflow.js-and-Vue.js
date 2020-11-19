@@ -38,7 +38,7 @@ import conv2d from "../assets/conv2d.vue";
 import maxPooling2d from "../assets/maxPooling2d.vue";
 import flatten from "../assets/flatten";
 import dense from "@/assets/dense";
-
+import compile from "@/assets/compile";
 export default {
   data: () => ({
     layers: [],
@@ -51,6 +51,7 @@ export default {
     flatten,
     dense,
     MNIST,
+    compile,
   },
   methods: {
     addLayer(layerName) {
