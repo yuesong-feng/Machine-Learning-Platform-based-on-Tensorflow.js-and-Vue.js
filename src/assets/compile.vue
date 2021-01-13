@@ -64,6 +64,7 @@
 import optimizer from "@/parameter/optimizer";
 import loss from "@/parameter/loss";
 import metrics from "@/parameter/metrics";
+import * as tf from "@tensorflow/tfjs";
 export default {
   components: {
     optimizer,
@@ -89,6 +90,7 @@ export default {
       this.allParameters.push({
         name: layerName,
       });
+      this.selectedParameter = "";
     },
     removeParameter() {
       this.allParameters.pop();
@@ -106,6 +108,27 @@ export default {
           this.layerData[key] = this.$refs.Parameters[i].parameterData[key];
         }
       }
+    },
+    addData(model, parameters) {
+      delete parameters["layerName"];
+      console.log(parameters)
+      let args = {};
+      for (let each in parameters) {
+        if (each == "loss") {
+          args[each] = parameters[each]
+        }
+        else if(each == "metrics"){
+          args[each] = [parameters[each]]
+        }
+      }
+      console.log(args)
+      let optimizer = tf.train.adam()
+      model.compile({
+        optimizer: optimizer,
+        loss: 'categoricalCrossentropy',
+        metrics: ['accuracy'],
+      });
+      return model;
     },
   },
   mounted() {},

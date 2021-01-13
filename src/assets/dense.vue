@@ -90,6 +90,7 @@ import name from "@/parameter/name";
 import trainable from "@/parameter/trainable";
 import weights from "@/parameter/weights";
 import inputDType from "@/parameter/inputDType";
+import * as tf from "@tensorflow/tfjs";
 export default {
   components: {
     units,
@@ -151,6 +152,7 @@ export default {
       this.allParameters.push({
         name: layerName,
       });
+      this.selectedParameter = "";
     },
     removeParameter() {
       this.allParameters.pop();
@@ -168,6 +170,21 @@ export default {
           this.layerData[key] = this.$refs.Parameters[i].parameterData[key];
         }
       }
+    },
+    addData(model, parameters) {
+      delete parameters["layerName"];
+      let args = {};
+      for (let each in parameters) {
+        if(each == "activation" || each == "kernelInitializer"){
+          args[each] = parameters[each]
+        }
+        else {
+          args[each] = Number(parameters[each]);
+        }
+      }
+      console.log(args)
+      model.add(tf.layers.dense(args));
+      return model;
     },
   },
   mounted() {},
