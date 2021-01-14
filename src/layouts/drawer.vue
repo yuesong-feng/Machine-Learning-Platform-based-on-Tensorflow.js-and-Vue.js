@@ -33,10 +33,10 @@
 export default {
   data: () => ({
     group: [
-      {
-        name: "Dataset",
-        layers: [{ name: "MNIST" }],
-      },
+      // {
+      //   name: "Dataset",
+      //   layers: [{ name: "MNIST" }],
+      // },
       {
         name: "Basic",
         layers: [

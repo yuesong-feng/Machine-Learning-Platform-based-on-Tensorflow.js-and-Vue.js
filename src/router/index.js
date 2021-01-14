@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import home from "../views/home.vue";
+import home from "../views/home.vue"
+import mnist from "../views/mnist.vue";
+import cars from "@/views/cars";
 Vue.use(VueRouter);
 
 const routes = [
@@ -9,6 +11,16 @@ const routes = [
     name: "home",
     component: home,
   },
+  {
+    path: "/mnist",
+    name: "mnist",
+    component: mnist,
+  },
+  {
+    path: "/cars",
+    name: "cars",
+    component: cars,
+  }
 ];
 
 const router = new VueRouter({

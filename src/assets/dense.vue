@@ -175,14 +175,24 @@ export default {
       delete parameters["layerName"];
       let args = {};
       for (let each in parameters) {
-        if(each == "activation" || each == "kernelInitializer"){
+        if (each == "inputShape") {
+          args[each] = parameters[each].split(",").map(Number);
+        }
+        else if(each == "activation" || each == "kernelInitializer"){
           args[each] = parameters[each]
+        }
+        else if(each == "useBias"){
+          if(parameters[each] == 'true'){
+            args[each] = true
+          }
+          else{
+            args[each] = false
+          }
         }
         else {
           args[each] = Number(parameters[each]);
         }
       }
-      console.log(args)
       model.add(tf.layers.dense(args));
       return model;
     },
