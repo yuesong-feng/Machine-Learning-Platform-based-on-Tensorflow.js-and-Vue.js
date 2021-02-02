@@ -89,15 +89,14 @@
 
           <v-col cols="3">
             <v-card class="mx-auto" max-width="344">
-              <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                height="200px"
-              ></v-img>
+              <v-img src="../images/mobilenet.jpg" height="200px"></v-img>
               <v-card-title> 迁移学习：图像分类 </v-card-title>
               <v-card-subtitle> 使用预训练模型进行图像分类 </v-card-subtitle>
 
               <v-card-actions>
-                <v-btn color="orange lighten-2" text> Explore </v-btn>
+                <router-link to="/TransferLearning" class="text-decoration-none">
+                  <v-btn color="orange lighten-2" text> START </v-btn>
+                </router-link>
 
                 <v-spacer></v-spacer>
 

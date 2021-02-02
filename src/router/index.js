@@ -2,7 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import home from "../views/home.vue"
 import mnist from "../views/mnist.vue";
-import cars from "@/views/cars";
+import cars from "@/views/cars.vue";
+import TransferLearning from "@/views/TransferLearning.vue"
 Vue.use(VueRouter);
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
     path: "/cars",
     name: "cars",
     component: cars,
+  },
+  {
+    path: "/TransferLearning",
+    name: "TransferLearning",
+    component: TransferLearning
   }
 ];
 
