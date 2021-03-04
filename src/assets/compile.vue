@@ -111,7 +111,6 @@ export default {
     },
     addData(model, parameters) {
       delete parameters["layerName"];
-      console.log(parameters)
       let args = {};
       for (let each in parameters) {
         if (each == "loss") {
@@ -121,7 +120,6 @@ export default {
           args[each] = [parameters[each]]
         }
       }
-      console.log(args)
       let optimizer = tf.train.adam()
       model.compile({
         optimizer: optimizer,

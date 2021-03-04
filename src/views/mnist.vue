@@ -17,10 +17,21 @@
                 @remove="remove(index)"
               ></component>
               <v-row>
-                <v-col cols="3"></v-col>
-                <v-col cols="3"> <v-btn @click="getModel()">汇总测试</v-btn></v-col>
+                <v-col cols="3">
+                  <v-btn @click="defaultLayers()">默认层</v-btn></v-col
+                >
+                <v-col cols="3">
+                  <v-btn @click="defaultParameters()"
+                    >默认参数</v-btn
+                  ></v-col
+                >
+                <v-col cols="3">
+                  <v-btn @click="defaultValues()">默认值</v-btn></v-col
+                >
+                <v-col cols="3">
+                  <v-btn @click="getModel()">获取模型</v-btn></v-col
+                >
                 <v-col cols="3"> <v-btn @click="run()">开始训练</v-btn></v-col>
-                <v-col cols="3"></v-col>
               </v-row>
             </v-sheet>
           </v-col>
@@ -43,6 +54,7 @@ import maxPooling2d from "../assets/maxPooling2d.vue";
 import flatten from "../assets/flatten";
 import dense from "@/assets/dense";
 import compile from "@/assets/compile";
+import { log } from "vega";
 export default {
   data: () => ({
     layers: [],
@@ -58,6 +70,61 @@ export default {
     compile,
   },
   methods: {
+    defaultLayers() {
+      this.addLayer("conv2d");
+      this.addLayer("maxPooling2d");
+      this.addLayer("conv2d");
+      this.addLayer("maxPooling2d");
+      this.addLayer("flatten");
+      this.addLayer("dense");
+      this.addLayer("compile");
+    },
+    defaultParameters() {
+      this.$refs.getParameters[0].addParameter("inputShape");
+      this.$refs.getParameters[0].addParameter("kernelSize");
+      this.$refs.getParameters[0].addParameter("filters");
+      this.$refs.getParameters[0].addParameter("strides");
+      this.$refs.getParameters[0].addParameter("activation");
+      this.$refs.getParameters[0].addParameter("kernelInitializer");
+      this.$refs.getParameters[1].addParameter("poolSize");
+      this.$refs.getParameters[1].addParameter("strides");
+      this.$refs.getParameters[2].addParameter("kernelSize");
+      this.$refs.getParameters[2].addParameter("filters");
+      this.$refs.getParameters[2].addParameter("strides");
+      this.$refs.getParameters[2].addParameter("activation");
+      this.$refs.getParameters[2].addParameter("kernelInitializer");
+      this.$refs.getParameters[3].addParameter("poolSize");
+      this.$refs.getParameters[3].addParameter("strides");
+      this.$refs.getParameters[5].addParameter("units");
+      this.$refs.getParameters[5].addParameter("kernelInitializer");
+      this.$refs.getParameters[5].addParameter("activation");
+      this.$refs.getParameters[6].addParameter("optimizer");
+      this.$refs.getParameters[6].addParameter("loss");
+      this.$refs.getParameters[6].addParameter("metrics");
+    },
+    defaultValues() {
+      this.$refs.getParameters[0].$refs.Parameters[0].value = "28,28,1";
+      this.$refs.getParameters[0].$refs.Parameters[1].value = "5";
+      this.$refs.getParameters[0].$refs.Parameters[2].value = "8";
+      this.$refs.getParameters[0].$refs.Parameters[3].value = "1";
+      this.$refs.getParameters[0].$refs.Parameters[4].value = "relu";
+      this.$refs.getParameters[0].$refs.Parameters[5].value = "varianceScaling";
+      this.$refs.getParameters[1].$refs.Parameters[0].value = "2,2";
+      this.$refs.getParameters[1].$refs.Parameters[1].value = "2,2";
+      this.$refs.getParameters[2].$refs.Parameters[0].value = "5";
+      this.$refs.getParameters[2].$refs.Parameters[1].value = "16";
+      this.$refs.getParameters[2].$refs.Parameters[2].value = "1";
+      this.$refs.getParameters[2].$refs.Parameters[3].value = "relu";
+      this.$refs.getParameters[2].$refs.Parameters[4].value = "varianceScaling";
+      this.$refs.getParameters[3].$refs.Parameters[0].value = "2,2";
+      this.$refs.getParameters[3].$refs.Parameters[1].value = "2,2";
+      this.$refs.getParameters[5].$refs.Parameters[0].value = "10";
+      this.$refs.getParameters[5].$refs.Parameters[1].value = "varianceScaling";
+      this.$refs.getParameters[5].$refs.Parameters[2].value = "softmax";
+      this.$refs.getParameters[6].$refs.Parameters[0].value = "tf.train.adam()";
+      this.$refs.getParameters[6].$refs.Parameters[1].value = "categoricalCrossentropy";
+      this.$refs.getParameters[6].$refs.Parameters[2].value = "['accuracy']";
+    },
     addLayer(layerName) {
       this.layers.push({
         name: layerName,
@@ -73,10 +140,13 @@ export default {
       let model = tf.sequential();
       for (let i = 0; i < this.$refs.getParameters.length; i++) {
         this.$refs.getParameters[i].sendData();
-        model = this.$refs.getParameters[i].addData(model, this.$refs.getParameters[i].layerData);
+        model = this.$refs.getParameters[i].addData(
+          model,
+          this.$refs.getParameters[i].layerData
+        );
       }
       console.log(model.summary());
-      return model
+      return model;
     },
     async showExamples(data) {
       // Create a container in the visor
@@ -141,7 +211,12 @@ export default {
       const IMAGE_WIDTH = 28;
       const IMAGE_HEIGHT = 28;
       const testData = data.nextTestBatch(testDataSize);
-      const testxs = testData.xs.reshape([testDataSize, IMAGE_WIDTH, IMAGE_HEIGHT, 1]);
+      const testxs = testData.xs.reshape([
+        testDataSize,
+        IMAGE_WIDTH,
+        IMAGE_HEIGHT,
+        1,
+      ]);
       const labels = testData.labels.argMax(-1);
       const preds = model.predict(testxs).argMax(-1);
 
@@ -149,20 +224,48 @@ export default {
       return [preds, labels];
     },
     async showAccuracy(model, data) {
-      const classNames = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+      const classNames = [
+        "Zero",
+        "One",
+        "Two",
+        "Three",
+        "Four",
+        "Five",
+        "Six",
+        "Seven",
+        "Eight",
+        "Nine",
+      ];
       const [preds, labels] = this.doPrediction(model, data);
       const classAccuracy = await tfvis.metrics.perClassAccuracy(labels, preds);
-      const container = {name: 'Accuracy', tab: 'Evaluation'};
+      const container = { name: "Accuracy", tab: "Evaluation" };
       tfvis.show.perClassAccuracy(container, classAccuracy, classNames);
 
       labels.dispose();
     },
     async showConfusion(model, data) {
-      const classNames = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+      const classNames = [
+        "Zero",
+        "One",
+        "Two",
+        "Three",
+        "Four",
+        "Five",
+        "Six",
+        "Seven",
+        "Eight",
+        "Nine",
+      ];
       const [preds, labels] = this.doPrediction(model, data);
-      const confusionMatrix = await tfvis.metrics.confusionMatrix(labels, preds);
-      const container = {name: 'Confusion Matrix', tab: 'Evaluation'};
-      tfvis.render.confusionMatrix(container, {values: confusionMatrix, tickLabels: classNames});
+      const confusionMatrix = await tfvis.metrics.confusionMatrix(
+        labels,
+        preds
+      );
+      const container = { name: "Confusion Matrix", tab: "Evaluation" };
+      tfvis.render.confusionMatrix(container, {
+        values: confusionMatrix,
+        tickLabels: classNames,
+      });
 
       labels.dispose();
     },

@@ -94,7 +94,10 @@
               <v-card-subtitle> 使用预训练模型进行图像分类 </v-card-subtitle>
 
               <v-card-actions>
-                <router-link to="/TransferLearning" class="text-decoration-none">
+                <router-link
+                  to="/TransferLearning"
+                  class="text-decoration-none"
+                >
                   <v-btn color="orange lighten-2" text> START </v-btn>
                 </router-link>
 
