@@ -17,17 +17,19 @@
                 @remove="remove(index)"
               ></component>
               <v-row>
+                <v-col cols="2"></v-col>
                 <v-col cols="3">
                   <v-btn @click="defaultLayers()">默认层</v-btn></v-col
                 >
                 <v-col cols="3">
-                  <v-btn @click="defaultParameters()"
-                    >默认参数</v-btn
-                  ></v-col
+                  <v-btn @click="defaultParameters()">默认参数</v-btn></v-col
                 >
                 <v-col cols="3">
                   <v-btn @click="defaultValues()">默认值</v-btn></v-col
                 >
+                <v-col cols="1"></v-col>
+
+                <v-col cols="2"></v-col>
                 <v-col cols="3">
                   <v-btn @click="getModel()">获取模型</v-btn></v-col
                 >
@@ -122,7 +124,8 @@ export default {
       this.$refs.getParameters[5].$refs.Parameters[1].value = "varianceScaling";
       this.$refs.getParameters[5].$refs.Parameters[2].value = "softmax";
       this.$refs.getParameters[6].$refs.Parameters[0].value = "tf.train.adam()";
-      this.$refs.getParameters[6].$refs.Parameters[1].value = "categoricalCrossentropy";
+      this.$refs.getParameters[6].$refs.Parameters[1].value =
+        "categoricalCrossentropy";
       this.$refs.getParameters[6].$refs.Parameters[2].value = "['accuracy']";
     },
     addLayer(layerName) {

@@ -48,7 +48,7 @@ export default {
           { name: "permute" },
           { name: "repeatVector" },
           { name: "reshape" },
-          { name: "upSampling2d" },
+          { name: "spatialDropout1d" },
         ],
       },
       {
@@ -66,7 +66,25 @@ export default {
       },
       {
         name: "Pooing",
-        layers: [{ name: "maxPooling2d" }],
+        layers: [
+          { name: "averagePooling1d" },
+          { name: "averagePooling2d" },
+          { name: "averagePooling3d" },
+          { name: "globalAveragePooling1d" },
+          { name: "globalAveragePooling2d" },
+          { name: "globalMaxPooling1d" },
+          { name: "globalMaxPooling2d" },
+          { name: "maxPooling1d" },
+          { name: "maxPooling2d" },
+          { name: "maxPooling3d" },
+        ],
+      },
+      {
+        name: "Normalization",
+        layers: [
+          { name: "batchNormalization" },
+          { name: "layerNormalization" },
+        ],
       },
       {
         name: "LayersModel",
