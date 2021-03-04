@@ -50,7 +50,6 @@ import drawer from "../layouts/drawer.vue";
 import MNIST from "@/assets/MNIST";
 import * as tf from "@tensorflow/tfjs";
 import * as tfvis from "@tensorflow/tfjs-vis";
-import { MnistData } from "../assets/data.js";
 
 import conv2d from "../assets/conv2d.vue";
 import maxPooling2d from "../assets/maxPooling2d.vue";
