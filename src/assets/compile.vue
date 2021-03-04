@@ -120,6 +120,7 @@ export default {
           args[each] = [parameters[each]]
         }
       }
+      console.log(args);
       let optimizer = tf.train.adam()
       model.compile({
         optimizer: optimizer,
