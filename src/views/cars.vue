@@ -17,9 +17,21 @@
                 @remove="remove(index)"
               ></component>
               <v-row>
-                <v-col cols="3"></v-col>
+                <v-col cols="2"></v-col>
                 <v-col cols="3">
-                  <v-btn @click="createModel()">汇总测试</v-btn></v-col
+                  <v-btn @click="defaultLayers()">默认层</v-btn></v-col
+                >
+                <v-col cols="3">
+                  <v-btn @click="defaultParameters()">默认参数</v-btn></v-col
+                >
+                <v-col cols="3">
+                  <v-btn @click="defaultValues()">默认值</v-btn></v-col
+                >
+                <v-col cols="1"></v-col>
+
+                <v-col cols="2"></v-col>
+                <v-col cols="3">
+                  <v-btn @click="getModel()">获取模型</v-btn></v-col
                 >
                 <v-col cols="3"> <v-btn @click="run()">开始训练</v-btn></v-col>
                 <v-col cols="3"></v-col>
@@ -60,6 +72,32 @@ export default {
     compile,
   },
   methods: {
+    defaultLayers() {
+      this.addLayer("dense");
+      this.addLayer("dense");
+      this.addLayer("compile");
+    },
+    defaultParameters() {
+      this.$refs.getParameters[0].addParameter("inputShape");
+      this.$refs.getParameters[0].addParameter("units");
+      this.$refs.getParameters[0].addParameter("useBias");
+      this.$refs.getParameters[1].addParameter("units");
+      this.$refs.getParameters[1].addParameter("useBias");
+      this.$refs.getParameters[2].addParameter("optimizer");
+      this.$refs.getParameters[2].addParameter("loss");
+      this.$refs.getParameters[2].addParameter("metrics");
+    },
+    defaultValues() {
+      this.$refs.getParameters[0].$refs.Parameters[0].value = "1";
+      this.$refs.getParameters[0].$refs.Parameters[1].value = "1";
+      this.$refs.getParameters[0].$refs.Parameters[2].value = "true";
+      this.$refs.getParameters[1].$refs.Parameters[0].value = "1";
+      this.$refs.getParameters[1].$refs.Parameters[1].value = "true";
+      this.$refs.getParameters[2].$refs.Parameters[0].value = "tf.train.adam()";
+      this.$refs.getParameters[2].$refs.Parameters[1].value =
+        "tf.losses.meanSquaredError";
+      this.$refs.getParameters[2].$refs.Parameters[2].value = "['mse']";
+    },
     addLayer(layerName) {
       this.layers.push({
         name: layerName,
@@ -71,7 +109,7 @@ export default {
     getTotalLayers() {
       return this.layers.length;
     },
-    createModel() {
+    getModel() {
       let model = tf.sequential();
       for (let i = 0; i < this.$refs.getParameters.length; i++) {
         this.$refs.getParameters[i].sendData();
@@ -252,7 +290,7 @@ export default {
       );
 
       // More code will be added below
-      const model = this.createModel();
+      const model = this.getModel();
       tfvis.show.modelSummary({ name: "Model Summary" }, model);
       // Convert the data to a form we can use for training.
       const tensorData = this.convertToTensor(data);
