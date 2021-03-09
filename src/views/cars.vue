@@ -110,13 +110,18 @@ export default {
     },
     getModel() {
       let model = tf.sequential();
-      for (let i = 0; i < this.$refs.getParameters.length; i++) {
+      for (let i = 0; i < this.$refs.getParameters.length - 1; i++) {
         this.$refs.getParameters[i].sendData();
         model = this.$refs.getParameters[i].addData(
           model,
           this.$refs.getParameters[i].layerData
         );
       }
+      model.compile({
+        optimizer: tf.train.adam(),
+        loss: tf.losses.meanSquaredError,
+        metrics: ['mse'],
+      });
       console.log(model.summary());
       return model;
     },
