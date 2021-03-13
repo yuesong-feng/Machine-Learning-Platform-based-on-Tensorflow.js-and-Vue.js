@@ -137,15 +137,17 @@
             </v-card>
           </v-col>
           <v-col cols="1.5"></v-col>
-          
+        </v-row>
+
+        <v-row>
           <v-col cols="1.5"></v-col>
           <v-col cols="3">
             <v-card class="mx-auto" max-width="344">
               <v-img src="../images/mnist.png" height="200px"></v-img>
-              <v-card-title> MNIST手写数字数据集 </v-card-title>
+              <v-card-title> 视频人脸识别 </v-card-title>
               <v-card-subtitle> 利用神经网络识别手写数字 </v-card-subtitle>
               <v-card-actions>
-                <router-link to="/mnist" class="text-decoration-none">
+                <router-link to="/blazeface" class="text-decoration-none">
                   <v-btn color="orange lighten-2" text>
                     START
                   </v-btn></router-link
@@ -177,6 +179,9 @@
               </v-expand-transition>
             </v-card>
           </v-col>
+          <v-col cols="3"></v-col>
+          <v-col cols="3"></v-col>
+          <v-col cols="1.5"></v-col>
         </v-row>
       </v-container>
     </v-main>
