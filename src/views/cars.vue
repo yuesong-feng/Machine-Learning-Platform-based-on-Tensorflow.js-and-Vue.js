@@ -7,15 +7,6 @@
           <drawer v-on:add="addLayer"></drawer>
           <v-col>
             <v-sheet min-height="100vh" rounded="lg">
-              <component
-                ref="getParameters"
-                v-for="(item, index) in layers"
-                :is="item.name"
-                :key="index"
-                v-bind:index="index"
-                v-bind:totalLayers="getTotalLayers()"
-                @remove="remove(index)"
-              ></component>
               <v-row>
                 <v-col cols="2"></v-col>
                 <v-col cols="3">
@@ -28,7 +19,19 @@
                   <v-btn @click="defaultValues()">默认值</v-btn></v-col
                 >
                 <v-col cols="1"></v-col>
+              </v-row>
 
+              <component
+                ref="getParameters"
+                v-for="(item, index) in layers"
+                :is="item.name"
+                :key="index"
+                v-bind:index="index"
+                v-bind:totalLayers="getTotalLayers()"
+                @remove="remove(index)"
+              ></component>
+              
+              <v-row>
                 <v-col cols="2"></v-col>
                 <v-col cols="3">
                   <v-btn @click="getModel()">获取模型</v-btn></v-col
@@ -120,7 +123,7 @@ export default {
       model.compile({
         optimizer: tf.train.adam(),
         loss: tf.losses.meanSquaredError,
-        metrics: ['mse'],
+        metrics: ["mse"],
       });
       console.log(model.summary());
       return model;
