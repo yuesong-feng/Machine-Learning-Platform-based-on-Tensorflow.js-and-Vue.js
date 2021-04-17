@@ -179,7 +179,44 @@
               </v-expand-transition>
             </v-card>
           </v-col>
-          <v-col cols="3"></v-col>
+                    <v-col cols="3">
+            <v-card class="mx-auto" max-width="344">
+              <v-img src="../images/cifar.png" height="200px"></v-img>
+              <v-card-title> CIFAR数据集 </v-card-title>
+              <v-card-subtitle> 利用神经网络进行图像分类 </v-card-subtitle>
+              <v-card-actions>
+                <router-link to="/blazeface" class="text-decoration-none">
+                  <v-btn color="orange lighten-2" text>
+                    START
+                  </v-btn></router-link
+                >
+                <v-spacer></v-spacer>
+                <v-btn icon @click="show_mnist = !show_mnist">
+                  <v-icon>{{
+                    show_mnist ? "mdi-chevron-up" : "mdi-chevron-down"
+                  }}</v-icon>
+                </v-btn>
+              </v-card-actions>
+              <v-expand-transition>
+                <div v-show="show_mnist">
+                  <v-divider></v-divider>
+                  <v-card-text>
+                    You will build a TensorFlow.js model to recognize
+                    handwritten digits with a convolutional neural network.
+                    First, we'll train the classifier by having it "look" at
+                    thousands of handwritten digit images and their labels. Then
+                    we'll evaluate the classifier's accuracy using test data
+                    that the model has never seen. This task is considered a
+                    classification task as we are training the model to assign a
+                    category (the digit that appears in the image) to the input
+                    image. We will train the model by showing it many examples
+                    of inputs along with the correct output. This is referred to
+                    as supervised learning.
+                  </v-card-text>
+                </div>
+              </v-expand-transition>
+            </v-card>
+          </v-col>
           <v-col cols="3"></v-col>
           <v-col cols="1.5"></v-col>
         </v-row>
