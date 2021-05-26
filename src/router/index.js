@@ -4,6 +4,7 @@ import home from "../views/home.vue"
 import mnist from "../views/mnist.vue";
 import cars from "@/views/cars.vue";
 import TransferLearning from "@/views/TransferLearning.vue"
+import blazeface from "@/views/blazeface.vue"
 Vue.use(VueRouter);
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     path: "/TransferLearning",
     name: "TransferLearning",
     component: TransferLearning
+  },
+  {
+    path: "/blazeface",
+    name: "blazeface",
+    component: blazeface
   }
 ];
 

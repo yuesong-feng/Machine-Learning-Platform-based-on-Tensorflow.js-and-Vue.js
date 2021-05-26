@@ -143,15 +143,15 @@
           <v-col cols="1.5"></v-col>
           <v-col cols="3">
             <v-card class="mx-auto" max-width="344">
-              <v-img src="../images/mnist.png" height="200px"></v-img>
+              <v-img src="../images/demo.gif" height="200px"></v-img>
               <v-card-title> 视频人脸识别 </v-card-title>
-              <v-card-subtitle> 利用神经网络识别手写数字 </v-card-subtitle>
+              <v-card-subtitle> 使用包含自定义编码器的单次检测器架构检测图像中的人脸</v-card-subtitle>
               <v-card-actions>
-                <router-link to="/blazeface" class="text-decoration-none">
-                  <v-btn color="orange lighten-2" text>
+                <!-- <router-link to="/blazeface" class="text-decoration-none"> -->
+                  <v-btn color="orange lighten-2" text href="https://storage.googleapis.com/tfjs-models/demos/blazeface/index.html">
                     START
-                  </v-btn></router-link
-                >
+                  </v-btn>
+                  <!-- </router-link> -->
                 <v-spacer></v-spacer>
                 <v-btn icon @click="show_mnist = !show_mnist">
                   <v-icon>{{
