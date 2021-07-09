@@ -1,24 +1,3 @@
 # tensorflow.js
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+基于浏览器的机器学习平台，使用tensorflow.js库，可完全自定义并训练自己的神经网络。
